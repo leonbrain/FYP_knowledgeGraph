@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+<link rel="icon" href="http://getbootstrap.com/favicon.ico">
+<title>Knowledge Graph</title>
+	
+<link href="/dist/bootstrap.min.css" rel="stylesheet">
+<script src="/dist/bootstrap.min.js"></script>
+<!-- script src="/dist/d3.v3.min.js"></script -->
+
+</head>
+
+<style>
+body {
+  padding-top: 30px;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  background-color: transparent;
+}
+	
+</style>
+
+<body>
+
+ <nav id="myNavbar" class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+	<!-- Brand and toggle get grouped for better mobile display -->
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/">TechLand</a>
+		</div>
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="navbarCollapse">
+			<ul class="nav navbar-nav">
+				<li><a href="/" target="_blank">TechGraph</a></li>
+				<li><a href="/tagcompare" target="_blank">TechCompare</a></li>
+				<li><a href="/techtask" target="_blank">TechTask</a></li>
+				<li><a href="/expert" target="_blank">ExpertGraph</a></li>
+				<li class="active"><a href="/about" target="_blank">About</a></li>
+			</ul>
+		</div>
+		
+	</div>
+  </nav>
+
+
+
+  <div class="container">
+	<div class="jumbotron">
+		<h1>TechLand</h1>
+		<p>The knowledge graph is a knowledge base to enhance search results with semantic information. 
+			We expect to built a specific knowledge graph from Stack Overflow called <strong>TechGraph</strong> and visualize it in an interacive graph. 
+			With it, novice developers can have an overview of certain technology in software engineering and even experienced ones also may get inspiration!
+			We implement it in both a browser plugin and this website.
+		</p>
+		
+		<img src="/dist/screenshot.png" class="img-thumbnail" style="width:750px;height:420px;" align="middle">
+	</div>
+	
+    <div class="row">
+        <div class="col-lg-4">
+          <h2>Browser plugin</h2>
+          <p>This is a user script which can be installed in the browser. When you search software-engineering tech in Google, the plugin will
+		     render both its definition and its general landscape which can assist you to refine your search. The plugin also provides an access to our website.
+			 It can be downloaded in our <a href="https://github.com/ccywch/knowledgeGraph_plugin">github</a>.
+		  </p>
+          <p><a class="btn btn-default" href="https://github.com/ccywch/knowledgeGraph_plugin" role="button">View details &raquo;</a></p>
+        </div>
+        <div class="col-lg-4">
+          <h2>Website</h2>
+          <p>There are two basic functions in this website. 
+			 First, for technical terms in software engineering, it can provide its definition, asking trend, (yearly) knowledge graph, top-voted questions, 
+			 code snippets (optional) and popular links in Stack Overflow; 
+			 Second, multiple tech can be compared in both trend and knowledge graphes;
+		  </p>
+          <p><a class="btn btn-default" href="/" role="button">View details &raquo;</a></p>
+       </div>
+        <div class="col-lg-4">
+          <h2>Beta functions</h2>
+          <p>There are also some beta functions which will be enriched in the furture.
+		     First, for a given task and programming language, our TechTask page can give hints/solutions to finish the task.
+			 Second, users can also type in his userID in Stack Overflow to see his expertise graph.
+		  </p>
+		  <p><a class="btn btn-default" href="/techtask" role="button">View details &raquo;</a></p>
+        </div>
+      </div>
+    
+	<br/>
+	<br/>
+	
+	<div class="row">
+		<div class="col-lg-8 col-md-offset-2">
+			<div class="embed-responsive embed-responsive-16by9">
+			  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/LERcOBrZUSg"></iframe>
+			</div>
+		</div>
+	</div>
+	
+	<br/>
+	 <p align="center">&copy; Copyright 2015 | Chen Chunyang | wchccy@gmail.com</p>
+  </div>
+<script src=/data/track.js></script>
+</body>

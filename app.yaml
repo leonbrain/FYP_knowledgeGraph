@@ -1,0 +1,52 @@
+application: graphofknowledge
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+
+- url: /
+  static_files: data/homepage.html
+  upload: homepage.html
+
+- url: /tagcompare  
+  static_files: data/tagCompare.html
+  upload: tagCompare.html
+
+- url: /techtask
+  static_files: data/taskHomepage.html
+  upload: taskHomepage.html  
+
+- url: /expert
+  static_files: data/expertsHome.html
+  upload: expertsHome.html  
+  
+- url: /about
+  static_files: data/about.html
+  upload: about.html   
+  
+- url: /motivation
+  static_files: data/motivation.html
+  upload: motivation.html
+  
+- url: /fonts
+  static_dir: fonts    
+  
+- url: /dist
+  static_dir: dist
+
+- url: /data
+  static_dir: data  
+
+- url: /migratedata
+  script: modelLoader.application
+  
+- url: /.*
+  script: knowledgeGraph.application
+  
+libraries:
+- name: webapp2
+  version: latest
+- name: jinja2
+  version: latest

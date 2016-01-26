@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+<link rel="icon" href="http://getbootstrap.com/favicon.ico">
+<title>Knowledge Graph</title>
+	
+<link href="/dist/bootstrap.min.css" rel="stylesheet">
+<link href="/dist/style.css" rel="stylesheet">
+<!-- script src="/dist/d3.v3.min.js"></script -->
+<script src="/dist/d3.v3.min.js"></script>
+<script src="/dist/d3.tip.v0.6.3.js"></script>
+
+
+</head>
+
+
+
+<body>
+
+ <nav id="myNavbar" class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+	<!-- Brand and toggle get grouped for better mobile display -->
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/">TechLand</a>
+		</div>
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="navbarCollapse">
+			<ul class="nav navbar-nav">
+				<li><a href="/" target="_blank">TechGraph</a></li>
+				<li><a href="/tagcompare" target="_blank">TechCompare</a></li>
+				<li><a href="/techtask" target="_blank">TechTask</a></li>
+				<li class="active"><a href="/expert" target="_blank">ExpertGraph</a></li>
+				<li><a href="/about" target="_blank">About</a></li>
+			</ul>
+			<form role="search" class="navbar-form navbar-right " onSubmit="return writeURL()" name="searchForm">
+                <div class="form-group">
+                    <input type="text" placeholder="Search" class="form-control" name="content" id="content" autocomplete="off">
+                    <span class="form-group-btn">
+                     <button class="btn btn-default" type="button" onclick="writeURL()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    </span>
+				</div>
+            </form>
+				
+		</div>
+		
+	</div>
+  </nav>
+
+
+
+  <div class="container">
+
+    <div class="jumbotron">
+       <h2>ExpertGraph: Search a user id in Stack Overflow for expertise graph<img src="/dist/beta.jpg" class="img-circle" style="width:30px;height:30px;" align="right"></h2>
+	   <h3><small>According to the questions answered by users, we obtain the expertise graph of experts by those question tags.
+	   But note all our data comes from the data dump released in March 8th, 2015 by Stack Overflow. 
+	   So we only collect experts whose ruputation is larger than 3000 before that time.
+	   It will be updated in the furture.
+	   </small></h3>
+    </div>
+    
+
+	<div class = "row" id=sandbox>
+		<div class="col-md-7 col-md-offset-2">
+			<h3>The expertise graph of <strong><a href="{{userLink}}">{{userName}}</a></strong></h3>
+		</div>
+		
+		<div class="col-md-7 col-md-offset-2" id="graphPosition">
+			<svg id = "graph" width = "700" height="500"></svg>
+		</div>	
+	</div>
+	
+	<script src="/data/graph.js"></script>
+	<script>
+		var graphContent = {% autoescape off %}{{knowledgeGraph}}{% endautoescape %};
+		var edgeDistance = 90*graphContent["links"].length/graphContent["nodes"].length;
+		//console.log(graphContent["links"].length, graphContent["nodes"].length, edgeDistance)
+		featureGraph(graphContent, 700, 500, 0, "#graph", edgeDistance, -100);
+	</script>
+	
+	<div class = "row">
+		<div class="col-md-7 col-md-offset-2" >
+			<p>*In order not to overwhelm, we only present 36 nodes in the graph.</p>
+		</div>
+	</div>
+	 
+
+	</br>
+	</br>
+	 <div class = "row">
+	 <p align="center">&copy; Copyright 2015 | ccy | wchccy@gmail.com</p>
+	 </div>
+  </div>
+
+<script src="/dist/jquery.min.js"></script>
+<script src="/dist/bootstrap.min.js"></script>  
+<script src="/data/track.js">//Google analytics</script>
+<script src="/data/recordBehaviour.js"></script>
+
+<script>
+ 
+function writeURL(){
+    var id = document.getElementById("content").value;
+	//console.log(task + pl);	
+	
+	if (id == null || id == "" || isNaN(id))         //The input is a number
+	{
+        alert("the user id must be filled correctly");
+        return false;
+    }
+	
+	//console.log(url)
+	window.location.assign("/expert/"+id);
+}
+
+</script>
+  
+</body>

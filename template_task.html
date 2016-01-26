@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+<link rel="icon" href="http://getbootstrap.com/favicon.ico">
+<title>Knowledge Graph</title>
+	
+<link href="/dist/bootstrap.min.css" rel="stylesheet">
+<link href="/dist/style.css" rel="stylesheet">
+<script src="/dist/d3.v3.min.js"></script>
+<script src="/dist/d3.tip.v0.6.3.js"></script>
+
+</head>
+
+
+<body>
+
+ <nav id="myNavbar" class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+	<!-- Brand and toggle get grouped for better mobile display -->
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/">TechLand</a>
+		</div>
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="navbarCollapse">
+			<ul class="nav navbar-nav">
+				<li><a href="/">TechGraph</a></li>
+				<li><a href="/tagcompare">TechCompare</a></li>
+				<li class="active"><a href="/techtask">TechTask</a></li>
+				<li><a href="/expert">ExpertGraph</a></li>
+				<li><a href="/about">About</a></li>
+			</ul>
+			<form role="search" class="navbar-form navbar-right " onSubmit="return writeURL()" name="searchForm">
+                 <div class="form-group">
+					
+					<select class="form-control placeholder" id="task">
+						<option selected disabled>Please select</option>
+						<option>visualization</option>
+						<option>data-visualization</option>
+						<option>plot</option>
+						<option>machine-learning</option>
+						<option>nlp</option>
+						<option>image-processing</option>
+						<option>computer-vision</option>
+						<option>data-mining</option>
+						<option>web-applications</option>
+						<option>speech-recognition</option>
+						<option>unit-testing</option>
+						<option>web-services</option>
+						<option>e-commerce</option>
+						<option>full-text-search</option>
+						<option>user-interface</option>
+						<option>orm</option>
+						<option>parsing</option>
+						<option>animation</option>
+						<option>geolocation</option>
+						<option>compilation</option>
+						<option>navigation</option>
+						<option>web-scraping</option>
+						<option>web-crawler</option>
+						<option>pdf-generation</option>
+						<option>html-parsing</option>
+						<option>xml-serialization</option>
+						<option>logging</option>
+						<option>serialization</option>
+					</select>
+				
+					<select class="form-control placeholder" id="pl">
+					  <option selected disabled>Please select</option>
+					  <option>java</option>
+					  <option>c#</option>
+					  <option>python</option>
+					  <option>c++</option>
+					  <option>javascript</option>
+					  <option>php</option>
+					  <option>r</option>
+					  <option>ruby</option>
+					  <option>perl</option>
+					  <option>c</option>
+					</select>
+				  </div>
+				  <button class="btn btn-default" type="button" onclick="writeURL()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>		
+            </form>
+				
+		</div>
+		
+	</div>
+  </nav>
+
+
+
+  <div class="container">
+
+    <div class="jumbotron">
+      <h2>TechTask: Search a task with one programming language for specific knowledge graph<img src="/dist/beta.jpg" class="img-circle" style="width:30px;height:30px;" align="right"></h2>
+	  <h3><small>You can select one task and one certain programming language to have boht an overview of them and yearly change between them.  
+	  </small></h3>
+    </div>
+    
+	<div class= "row">
+		<div class="col-md-7 col-md-offset-3">
+			<h4>The knowledgeGraph of <strong>{{task}}</strong> and <strong>{{pl}}</strong></h4>
+		</div>
+	</div>
+	
+	<script src="/data/graph.js"></script>
+	<div class = "row">
+	<div class="col-md-7 col-md-offset-2" id = "kgPosition">
+		<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+		{% for i in range(2008,2015) %}
+			{% if i==2008 %}
+				<li class="active"><a href="#total" data-toggle="tab">Total</a></li>
+			{% elif i in knowledgeGraph %}
+				<li><a href="#{{i}}" data-toggle="tab">{{i}}</a></li>
+			{% endif %}
+		{% endfor %}
+		</ul>
+		
+		<div id="my-tab-content" class="tab-content">
+		{% for i in range(2008,2015) %}
+			{% if i==2008 %}
+				<div class="tab-pane active" id="total">
+					<svg id="totalGraph" width = "700" height="500"></svg>
+				</div>
+				<script>
+					var graphContent = {% autoescape off %}{{knowledgeGraph[i]}}{% endautoescape %};
+					var edgeDistance = 80*graphContent["links"].length/graphContent["nodes"].length;
+					//console.log(graphContent["links"].length, graphContent["nodes"].length, edgeDistance)
+					featureGraph(graphContent, 700, 500, 0, "#totalGraph", edgeDistance, -100);
+				</script>
+			{% elif i in knowledgeGraph %}
+				<div class="tab-pane" id="{{i}}">
+					<svg id="graph{{i}}" width = "700" height="500"></svg>
+				</div>
+				<script>
+					//Adjust the edge distance in the graph based on ratio of edges and nodes
+					var graphContent = {% autoescape off %}{{knowledgeGraph[i]}}{% endautoescape %};
+					var edgeDistance = 80*graphContent["links"].length/graphContent["nodes"].length;
+					//console.log(graphContent["links"].length, graphContent["nodes"].length, edgeDistance);
+					featureGraph(graphContent, 700, 500, 0, "#graph{{i}}", edgeDistance, -100);
+				</script>
+			{% endif %}
+		{% endfor %}
+		</div>		
+	</div>	
+	</div>
+	
+	<div class = "row">
+		<div class="col-md-7 col-md-offset-2" >
+			<p>*<strong>Right-click</strong> the node for a beirf definition or <strong>double-click</strong> the node for more details.</p>
+		</div>
+	</div>
+	
+	<div class = "row" >
+	   <!-- Example row of columns -->
+		<div class="col-md-7 col-md-offset-2">
+			<h3>Top-upvoted questions:</h3>
+			{% for question in topQustions %}	
+				<p class="threadEntry">
+					<span class="score">{{question[0]}}</span>
+					<a href="{{question[1]}}"  target="_blank">{% autoescape off %}{{question[2]}}{% endautoescape %}</a>
+				</p>
+			{% endfor %}
+		</div>
+	</div>
+	 
+	 
+	 <br/>
+	 <br/>
+	 <br/>
+
+</script>
+
+	</br>
+	</br>
+	 <div class = "row">
+	 <p align="center">&copy; Copyright 2015 | ccy | wchccy@gmail.com</p>
+	 </div>
+  </div>
+
+<script src="/dist/jquery.min.js"></script>
+<script src="/dist/bootstrap.min.js"></script>  
+<script src="/data/track.js">//Google analytics</script>
+<script src="/data/recordBehaviour.js"></script>
+
+<script>
+ var topic = ["java_orm", "java_plot", "java_data-visualization", "java_visualization", "java_parsing", "java_animation", "java_geolocation", "java_machine-learning", "java_e-commerce", "java_xml-serialization", "java_logging", "java_serialization", "java_compilation", "java_navigation", "java_web-scraping", "java_web-crawler", "java_pdf-generation", "java_html-parsing", "java_data-mining", "java_image-processing", "java_computer-vision", "java_web-applications", "java_user-interface", "java_nlp", "java_speech-recognition", "java_unit-testing", "java_web-services", "java_full-text-search", "c#_orm", "c#_plot", "c#_data-visualization", "c#_visualization", "c#_parsing", "c#_animation", "c#_geolocation", "c#_machine-learning", "c#_e-commerce", "c#_xml-serialization", "c#_logging", "c#_serialization", "c#_compilation", "c#_navigation", "c#_web-scraping", "c#_web-crawler", "c#_pdf-generation", "c#_html-parsing", "c#_data-mining", "c#_image-processing", "c#_computer-vision", "c#_web-applications", "c#_user-interface", "c#_nlp", "c#_speech-recognition", "c#_unit-testing", "c#_web-services", "c#_full-text-search", "python_orm", "python_plot", "python_data-visualization", "python_visualization", "python_parsing", "python_animation", "python_geolocation", "python_machine-learning", "python_e-commerce", "python_xml-serialization", "python_logging", "python_serialization", "python_compilation", "python_navigation", "python_web-scraping", "python_web-crawler", "python_pdf-generation", "python_html-parsing", "python_data-mining", "python_image-processing", "python_computer-vision", "python_web-applications", "python_user-interface", "python_nlp", "python_speech-recognition", "python_unit-testing", "python_web-services", "python_full-text-search", "c++_orm", "c++_plot", "c++_data-visualization", "c++_visualization", "c++_parsing", "c++_animation", "c++_geolocation", "c++_machine-learning", "c++_xml-serialization", "c++_logging", "c++_serialization", "c++_compilation", "c++_navigation", "c++_web-scraping", "c++_web-crawler", "c++_pdf-generation", "c++_html-parsing", "c++_data-mining", "c++_image-processing", "c++_computer-vision", "c++_web-applications", "c++_user-interface", "c++_nlp", "c++_speech-recognition", "c++_unit-testing", "c++_web-services", "c++_full-text-search", "javascript_orm", "javascript_plot", "javascript_data-visualization", "javascript_visualization", "javascript_parsing", "javascript_animation", "javascript_geolocation", "javascript_e-commerce", "javascript_xml-serialization", "javascript_logging", "javascript_serialization", "javascript_compilation", "javascript_navigation", "javascript_web-scraping", "javascript_web-crawler", "javascript_pdf-generation", "javascript_html-parsing", "javascript_data-mining", "javascript_image-processing", "javascript_computer-vision", "javascript_web-applications", "javascript_user-interface", "javascript_nlp", "javascript_speech-recognition", "javascript_unit-testing", "javascript_web-services", "javascript_full-text-search", "php_orm", "php_plot", "php_data-visualization", "php_visualization", "php_parsing", "php_animation", "php_geolocation", "php_machine-learning", "php_e-commerce", "php_xml-serialization", "php_logging", "php_serialization", "php_compilation", "php_navigation", "php_web-scraping", "php_web-crawler", "php_pdf-generation", "php_html-parsing", "php_data-mining", "php_image-processing", "php_computer-vision", "php_web-applications", "php_user-interface", "php_nlp", "php_speech-recognition", "php_unit-testing", "php_web-services", "php_full-text-search", "r_plot", "r_data-visualization", "r_visualization", "r_parsing", "r_animation", "r_geolocation", "r_machine-learning", "r_logging", "r_serialization", "r_compilation", "r_web-scraping", "r_web-crawler", "r_pdf-generation", "r_html-parsing", "r_data-mining", "r_image-processing", "r_web-applications", "r_user-interface", "r_nlp", "r_unit-testing", "r_web-services", "ruby_orm", "ruby_parsing", "ruby_geolocation", "ruby_machine-learning", "ruby_e-commerce", "ruby_xml-serialization", "ruby_logging", "ruby_serialization", "ruby_compilation", "ruby_navigation", "ruby_web-scraping", "ruby_web-crawler", "ruby_pdf-generation", "ruby_html-parsing", "ruby_data-mining", "ruby_image-processing", "ruby_web-applications", "ruby_user-interface", "ruby_nlp", "ruby_unit-testing", "ruby_web-services", "ruby_full-text-search", "perl_orm", "perl_plot", "perl_parsing", "perl_geolocation", "perl_logging", "perl_serialization", "perl_compilation", "perl_web-scraping", "perl_web-crawler", "perl_pdf-generation", "perl_html-parsing", "perl_image-processing", "perl_web-applications", "perl_user-interface", "perl_nlp", "perl_unit-testing", "perl_web-services", "perl_full-text-search", "c_plot", "c_data-visualization", "c_visualization", "c_parsing", "c_animation", "c_machine-learning", "c_logging", "c_serialization", "c_compilation", "c_pdf-generation", "c_html-parsing", "c_data-mining", "c_image-processing", "c_computer-vision", "c_web-applications", "c_user-interface", "c_nlp", "c_speech-recognition", "c_unit-testing", "c_web-services", "c_full-text-search"]; 
+ 
+function writeURL(){
+    var task = document.getElementById("task").value;
+	var pl = document.getElementById("pl").value;
+	//console.log(task + pl);	
+	
+	if (topic.indexOf(pl+"_"+task) == -1)         //Check the tag list
+	{
+		alert("Such combination is not in our tag pool or does not contain enough resources. Please try others.");
+		return false;
+	}
+	
+	url = (pl+"&"+task).replace("#", "+++");
+	//console.log(url)
+	window.location.assign("/techtask/"+url);
+}
+
+</script>
+
+
+  
+</body>

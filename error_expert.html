@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+<link rel="icon" href="http://getbootstrap.com/favicon.ico">
+<title>Knowledge Graph</title>
+	
+<link href="/dist/bootstrap.min.css" rel="stylesheet">
+<!-- script src="/dist/d3.v3.min.js"></script -->
+<script src="/data/track.js">//Google analytics</script>
+
+<script>
+
+function writeURL(){
+    var id = document.getElementById("content").value;
+	//console.log(task + pl);	
+	
+	if (id == null || id == "" || isNaN(id))         //The input is a number
+	{
+        alert("the user id must be filled correctly");
+        return false;
+    }
+	
+	//console.log(url)
+	window.location.assign("/expert/"+id);
+}
+
+
+</script>
+
+
+
+</head>
+
+<style>
+body {
+  padding-top: 70px;
+}
+	
+</style>
+
+<body>
+
+ <nav id="myNavbar" class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+	<!-- Brand and toggle get grouped for better mobile display -->
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="http://stackoverflow.com/">Stack Overflow</a>
+		</div>
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="navbarCollapse">
+			<ul class="nav navbar-nav">
+				<li><a href="/" target="_blank">TechGraph</a></li>
+				<li><a href="/tagcompare" target="_blank">TechCompare</a></li>
+				<li><a href="/techtask" target="_blank">TechTask</a></li>
+				<li class="active"><a href="/expert" target="_blank">ExpertGraph</a></li>
+				<li><a href="/about" target="_blank">About</a></li>
+			</ul>
+		</div>
+		
+	</div>
+  </nav>
+
+
+
+  <div class="container">
+
+    <div class="jumbotron">
+      <h2>ExpertGraph: Search a user id in Stack Overflow for expertise graph <img src="/dist/beta.jpg" class="img-circle" style="width:30px;height:30px;" align="right"></h2>
+	  <h3><small>According to the questions answered by users, we obtain the expertise graph of experts by those question tags.
+	  But note all our data comes from the data dump released in March 8th, 2015 by Stack Overflow. 
+	  So we only collect experts whose ruputation is larger than 3000 before that time.
+	  It will be updated in the furture.
+	  </small></h3>
+    </div>
+    
+	
+	<div class="row">
+	   <div class="col-lg-8 col-lg-offset-2">
+       
+		<div class="input-group">
+          <input type="text" class="form-control input-lg" id="content" placeholder="Search for..." autocomplete="off">
+          <span class="input-group-btn">
+           <button class="btn btn-default btn-lg" type="button" onclick="writeURL()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+          </span>
+       </div><!-- /input-group -->
+      </div><!-- /.col-lg-6 -->
+    </div>
+	
+	
+	 <br/>
+	 <br/>
+		 
+	
+	<div class="row">
+	   <div class="col-lg-8 col-lg-offset-2">
+		  <h5>Sorry, the user id is not recorded in our database maybe due to two reasons:</h5>
+		  <h5>&nbsp;&nbsp;1. The reputation score of that user did not reach 3000;</h5>
+		  <h5>&nbsp;&nbsp;2. No enough questions are answered by that user which is insufficient to generate expertise graph.</h5>
+		  <h5>Please try other ids or wait for us to update our data.</h5>
+	   </div>
+	</div>
+		 
+	 <br/>
+	 <br/>
+	 <br/>
+	 <br/>
+	 <br/>
+	 <br/>
+	 <br/>
+	 <br/>
+	 <br/>
+	 <br/>
+	 <br/>
+	 <br/>
+
+
+	</br>
+	</br>
+	 <p align="center">&copy; Copyright 2015 | Chen Chunyang | chen0966@e.ntu.edu.sg</p>
+  </div>
+  
+  <script src="/dist/jquery.min.js"></script>
+  <script src="/dist/bootstrap.min.js"></script>
+
+</body>
